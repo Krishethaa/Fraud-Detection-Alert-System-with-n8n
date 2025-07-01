@@ -1,0 +1,169 @@
+{
+  "name": "projectDP",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fraud-alert",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        300,
+        0
+      ],
+      "id": "af8ec1e2-5d61-4fab-9bf1-c568253fbd66",
+      "name": "Webhook",
+      "webhookId": "62789d38-1037-4c72-b34b-d28eeba9da03"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "41c76865-0158-47e8-9e37-82ae68b8a350",
+              "leftValue": "={{$json[\"Prediction\"] == 1}}\n",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        0
+      ],
+      "id": "d3b02ebe-fbd6-4004-9005-2945774bf83c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "fromEmail": "taruntarunprasanna@gmail.com",
+        "toEmail": "taruntarunprasanna@gmail.com",
+        "subject": "=🚨 Fraud Alert Detected!",
+        "emailFormat": "=html",
+        "html": "=🚨 Fraud Alert flagged as suspicious!\n\n⚠️ This transaction has been flagged as FRAUD by the system.\n\n🕵️ Please investigate immediately.\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1320,
+        -100
+      ],
+      "id": "85bf21db-4247-4a8b-9caf-2435eabb93fd",
+      "name": "Send email",
+      "webhookId": "23ea8f85-20b0-42f0-bdfd-e342aaf1b07b",
+      "credentials": {
+        "smtp": {
+          "id": "M0SmyFL4r99UbYNU",
+          "name": "SMTP account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1ea881ea-d92b-4162-880b-2bf47e8fa84a",
+              "name": " Prediction",
+              "value": 1,
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "selected",
+        "includeFields": "type, {{$json[\"amount\"]}}, step, oldbalanceOrg, newbalanceOrig, oldbalanceDest, newbalanceDest",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        580,
+        -120
+      ],
+      "id": "363b701f-ed1d-47eb-9467-0d897618089d",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "name": "First item",
+          "code": 1
+        }
+      },
+      {
+        "json": {
+          "name": "Second item",
+          "code": 2
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "78b2ae58-ff98-4e23-ab33-04a400a26451",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "75b065ef014bbb4599aaed73148ce2d4c2e3c5b6278f920e1f02ed105ed5d2fc"
+  },
+  "id": "lxw6PAax8ZjhkBeY",
+  "tags": []
+}
