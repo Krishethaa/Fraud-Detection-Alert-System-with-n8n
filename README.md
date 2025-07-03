@@ -1,9 +1,10 @@
 # Fraud-Detection-Alert-System-with-n8n
 
-🚀 A machine learning powered system that detects fraudulent transactions and automatically sends fraud alerts via email using **n8n workflows**.
+🚀 A Streamlit-based machine learning app that detects fraudulent transactions in uploaded CSV files and triggers email alerts via n8n workflow automation.
 
 ---
-
+Technologies Used: Python, Streamlit, n8n, Docker, SMTP, Git/GitHub
+---
 ## 💡 Project Overview
 
 This project combines:
@@ -12,7 +13,17 @@ This project combines:
 - **n8n** (open-source automation tool) to trigger fraud alert emails when frauds are detected.
 
 ---
+✅Features:
 
+ Fraud detection using a trained ML model
+
+ Automated fraud alert emails via n8n
+
+ Dockerized n8n for workflow execution
+ 
+ Clean codebase with version control
+ 
+---
 ## ⚙️ How It Works
 
 1️⃣ Upload a CSV file of transactions using the Streamlit app.  
